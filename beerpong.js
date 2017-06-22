@@ -53,8 +53,7 @@ class beerpong {
 	miss() {
 		this.currentThrows++
 		if (this.currentThrows >= this.noOfBalls) {
-			this.currentTeam *= -1
-			this.currentThrows = 0
+			this.changeTeam()
 		}
 	}
 
