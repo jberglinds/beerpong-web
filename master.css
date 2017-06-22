@@ -43,6 +43,8 @@ h1.gameName {
 	height: 60px;
 	cursor: pointer;
 	margin: 5px 0;
+	box-shadow: inset 0px 0px 7px 0px rgba(0,0,0,0.75);
+
 }
 
 .pending {
