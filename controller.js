@@ -1,5 +1,8 @@
 let game = new beerpong(10, 2)
 
+let teamOneName = document.querySelector('.teamOne h2');
+let teamTwoName = document.querySelector('.teamTwo h2');
+
 function updateUI() {
 	document.querySelectorAll('#teamOne .cup').forEach(cup => {
 		let status = game.team1Cups[cup.dataset.index]
@@ -24,6 +27,14 @@ function updateUI() {
 			break
 		}
 	})
+
+	if(game.currentTeam > 0) {
+		teamOneName.classList.add('active')
+		teamTwoName.classList.remove('active')
+	} else {
+		teamOneName.classList.remove('active')
+		teamTwoName.classList.add('active')
+	}
 
 }
 

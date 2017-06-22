@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400');
 
 /** {
 	border: 1px solid red;
@@ -21,13 +21,18 @@ h1.gameName {
 	margin-bottom: 10px;
 }
 
-.team ul {
+.teams ul {
 	list-style: none;
 	padding: 0;
 }
 
-.team:last-child * {
+.teamTwo * {
 	text-align: right;
+}
+
+.teams h2.active {
+	color: #BADA55;
+	font-weight: 700;
 }
 
 .cup {
