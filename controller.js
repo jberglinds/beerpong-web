@@ -19,5 +19,5 @@ function clickCup(event) {
 }
 
 document.querySelectorAll('.cup').forEach(cup => cup.addEventListener('click', clickCup))
-document.querySelector('#missButton').addEventListener('click', game.miss)
+document.querySelector('#missButton').addEventListener('click', () => game.miss())
 document.querySelector('#bounce').addEventListener('click', () => game.bounce = !game.bounce)
