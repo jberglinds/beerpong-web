@@ -15,9 +15,9 @@ class beerpong {
 		if (cupIndex >= this.noOfCups) return
 
 		if (this.currentTeam > 0) {
-			this.team1Cups[cupIndex] = true
-		} else {
 			this.team2Cups[cupIndex] = true
+		} else {
+			this.team1Cups[cupIndex] = true
 		}
 		this.currentThrows++
 
@@ -28,7 +28,11 @@ class beerpong {
 	}
 
 	getCup(team, index) {
-		return team === 1 ? this.team1Cups[index-1] : this.team2Cups[index-1];
+		return team === 1 ? this.team1Cups[index] : this.team2Cups[index];
+	}
+
+	getCurrentTeam() {
+		return this.currentTeam
 	}
 
 }
