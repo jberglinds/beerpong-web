@@ -6,6 +6,11 @@ h1 {
 	text-align: center;
 }
 
+.teams {
+	display: flex;
+	justify-content: space-between;
+}
+
 .cup {
 	border: 1px solid black;
 	border-radius: 50%;
