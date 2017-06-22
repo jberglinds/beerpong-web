@@ -1,21 +1,37 @@
 let game = new beerpong(10, 2)
 
 function updateUI() {
-  let teamOne = document.querySelectorAll('#teamOne .cup').forEach(cup =>
-    cup.disabled = game.getCup(1, cup.dataset.index)
-  )
-  let teamTwo = document.querySelectorAll('#teamTwo .cup').forEach(cup =>
-    cup.disabled = game.getCup(2, cup.dataset.index)
-  )
+	document.querySelectorAll('#teamOne .cup').forEach(cup => {
+		let status = game.team1Cups[cup.dataset.index]
+		switch (status) {
+		case cupStatus.HIT:
+			cup.style.visibility = 'hidden'
+			break
+		case cupStatus.PENDING:
+			cup.disabled = true
+			break
+		}
+	})
 
+	document.querySelectorAll('#teamTwo .cup').forEach(cup => {
+		let status = game.team2Cups[cup.dataset.index]
+		switch (status) {
+		case cupStatus.HIT:
+			cup.style.visibility = 'hidden'
+			break
+		case cupStatus.PENDING:
+			cup.disabled = true
+			break
+		}
+	})
 
 }
 
 function clickCup(event) {
-  if (this.parentElement.parentElement.dataset.teamid != game.currentTeam) {
-    game.hitCup(this.dataset.index)
-    updateUI()
-  }
+	if (this.parentElement.parentElement.dataset.teamid != game.currentTeam) {
+		game.hitCup(this.dataset.index)
+		updateUI()
+	}
 }
 
 document.querySelectorAll('.cup').forEach(cup => cup.addEventListener('click', clickCup))
