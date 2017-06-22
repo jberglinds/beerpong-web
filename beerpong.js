@@ -7,6 +7,7 @@ class beerpong {
 		this.team1Cups = new Array(noOfCups).fill(false)
 		this.team2Cups = new Array(noOfCups).fill(false)
 
+		this.bounce = false;
 		this.currentTeam = 1
 		this.currentThrows = 0
 	}
@@ -28,11 +29,15 @@ class beerpong {
 	}
 
 	getCup(team, index) {
-		return team === 1 ? this.team1Cups[index] : this.team2Cups[index];
+		return team === 1 ? this.team1Cups[index] : this.team2Cups[index]
 	}
 
-	getCurrentTeam() {
-		return this.currentTeam
+	miss() {
+		this.currentThrows++;
+		if (this.currentThrows >= this.noOfBalls) {
+			this.currentTeam *= -1
+			this.currentThrows = 0
+		}
 	}
 
 }
