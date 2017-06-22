@@ -16,15 +16,26 @@ class beerpong {
 		this.bounce = false
 		this.currentTeam = 1
 		this.currentThrows = 0
+		this.extraCups = 0
 	}
 
 	hitCup(cupIndex) {
 		if (cupIndex >= this.noOfCups) return
 
+		this.extraCups += this.bounce ? 1 : 0
+
 		if (this.currentTeam > 0) {
-			this.team2Cups[cupIndex] = cupStatus.PENDING
+			if (this.team2Cups[cupIndex] === cupStatus.PENDING) {
+				this.extraCups += 2;
+			} else {
+				this.team2Cups[cupIndex] = cupStatus.PENDING
+			}
 		} else {
-			this.team1Cups[cupIndex] = cupStatus.PENDING
+			if (this.team1Cups[cupIndex] === cupStatus.PENDING) {
+				this.extraCups += 2;
+			} else {
+				this.team1Cups[cupIndex] = cupStatus.PENDING
+			}
 		}
 		this.currentThrows++
 

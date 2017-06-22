@@ -40,7 +40,7 @@ h1.gameName {
 	margin: 5px 0;
 }
 
-.cup[disabled] {
+.pending {
 	opacity: 0.5 !important;
 }
 

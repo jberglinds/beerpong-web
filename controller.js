@@ -20,7 +20,7 @@ function updateUI() {
 			cup.style.visibility = 'hidden'
 			break
 		case cupStatus.PENDING:
-			cup.disabled = true
+			cup.classList.add('pending')
 			break
 		}
 	})
