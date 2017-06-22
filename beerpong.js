@@ -27,6 +27,10 @@ class beerpong {
 		}
 	}
 
+	getCup(team, index) {
+		return team === 1 ? this.team1Cups[index-1] : this.team2Cups[index-1];
+	}
+
 }
 
 // class team {
