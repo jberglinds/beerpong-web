@@ -2,10 +2,10 @@ let game = new beerpong(10, 2)
 
 function updateUI() {
   let teamOne = document.querySelectorAll('#teamOne .cup').forEach(cup =>
-    cup.disabled = game.getCup(1, cup.dataset.index-1)
+    cup.disabled = game.getCup(1, cup.dataset.index)
   )
   let teamTwo = document.querySelectorAll('#teamTwo .cup').forEach(cup =>
-    cup.disabled = game.getCup(2, cup.dataset.index-1)
+    cup.disabled = game.getCup(2, cup.dataset.index)
   )
 
 
@@ -13,7 +13,7 @@ function updateUI() {
 
 function clickCup(event) {
   if (this.parentElement.parentElement.dataset.teamid != game.currentTeam) {
-    game.hitCup(this.dataset.index-1)
+    game.hitCup(this.dataset.index)
     updateUI()
   }
 }
