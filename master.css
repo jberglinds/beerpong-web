@@ -1,18 +1,38 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+
 /** {
 	border: 1px solid red;
 }*/
 
-h1 {
+body {
+	background-color: #121212;
+	color: white;
+	font-family: 'Open Sans', sans-serif;
+	margin: 0 5vw;
+}
+
+h1.gameName {
 	text-align: center;
 }
 
 .teams {
 	display: flex;
 	justify-content: space-between;
+	margin-bottom: 10px;
+}
+
+.team ul {
+	list-style: none;
+	padding: 0;
+}
+
+.team:last-child * {
+	text-align: right;
 }
 
 .cup {
-	border: 1px solid black;
+	border: 3px solid green;
+	background-color: white;
 	border-radius: 50%;
 	width: 50px;
 	height: 50px;
@@ -20,10 +40,21 @@ h1 {
 	margin: 5px 0;
 }
 
+.cup[disabled] {
+	opacity: 0.5 !important;
+}
+
+#teamOne .cup {
+	border-color: red;
+}
+
+#teamTwo .cup {
+	border-color: blue;
+}
+
 .table {
 	display: flex;
 	justify-content: space-between;
-	width: 80vw;
 	margin: auto;
 }
 
