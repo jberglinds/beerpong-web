@@ -1,0 +1,13 @@
+{
+	"name": "beerpong",
+	"version": "1.0.0",
+	"main": "index.js",
+	"author": "Jonathan Berglind, Emil Lindblom",
+	"license": "MIT",
+	"scripts": {
+		"start": "browser-sync start --server --files '*.css, *.html, *.js'"
+	},
+	"dependencies": {
+		"browser-sync": "^2.18.12"
+	}
+}
