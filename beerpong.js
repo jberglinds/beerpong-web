@@ -17,11 +17,22 @@ class beerpong {
 		this.currentTeam = 1
 		this.currentThrows = 0
 		this.extraCups = 0
+		this.extraRound = false
 	}
 
-	//A cup with index @param {cupIndex} is hit
+	//A cup with index @param {cupIndex} is hit.
 	hitCup(cupIndex) {
 		if (cupIndex >= this.noOfCups) return
+
+		//If the team has extra cups to remove.
+		if (this.extraRound) {
+			this.currentTeam > 0 ? this.team2Cups[cupIndex] = cupStatus.HIT : this.team1Cups[cupIndex] = cupStatus.HIT
+			this.extraCups--
+			if (this.extraCups <= 0) {
+				this.changeTeam()
+			}
+			return;
+		}
 
 		this.extraCups += this.bounce ? 1 : 0
 
@@ -45,11 +56,8 @@ class beerpong {
 		}
 	}
 
-	//A team has done all their throws
+	//A team has done all their throws.
 	changeTeam() {
-		this.currentTeam *= -1
-		this.currentThrows = 0
-
 		for (let i = 0; i < this.team1Cups.length; i++) {
 			this.team1Cups[i] = this.team1Cups[i] === cupStatus.PENDING ? cupStatus.HIT : this.team1Cups[i]
 		}
@@ -57,9 +65,19 @@ class beerpong {
 		for (let i = 0; i < this.team2Cups.length; i++) {
 			this.team2Cups[i] = this.team2Cups[i] === cupStatus.PENDING ? cupStatus.HIT : this.team2Cups[i]
 		}
+
+		//If the team has any extra cups to remove.
+		if (this.extraCups > 0) {
+			this.extraRound = true
+			return;
+		} else {
+			this.extraRound = false
+			this.currentTeam *= -1
+			this.currentThrows = 0
+		}
 	}
 
-	//A missed throw
+	//A missed throw.
 	miss() {
 		this.currentThrows++
 		if (this.currentThrows >= this.noOfBalls) {
