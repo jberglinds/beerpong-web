@@ -19,6 +19,7 @@ class beerpong {
 		this.extraCups = 0
 	}
 
+	//A cup with index @param {cupIndex} is hit
 	hitCup(cupIndex) {
 		if (cupIndex >= this.noOfCups) return
 
@@ -44,6 +45,7 @@ class beerpong {
 		}
 	}
 
+	//A team has done all their throws
 	changeTeam() {
 		this.currentTeam *= -1
 		this.currentThrows = 0
@@ -57,10 +59,7 @@ class beerpong {
 		}
 	}
 
-	getCup(team, index) {
-		return team === 1 ? this.team1Cups[index] : this.team2Cups[index]
-	}
-
+	//A missed throw
 	miss() {
 		this.currentThrows++
 		if (this.currentThrows >= this.noOfBalls) {
