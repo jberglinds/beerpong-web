@@ -19,6 +19,8 @@ class beerpong {
 
 		this.extraCups = 0
 		this.extraRound = false
+
+		this.statusMessage = `${this.currentTeam > 0 ? 'Red' : 'Blue'} Team: ${this.noOfBalls} throw(s) left`
 	}
 
 	//A cup with index @param {cupIndex} is hit.
@@ -32,6 +34,7 @@ class beerpong {
 		if (this.extraRound) {
 			opponentCups[cupIndex] = cupStatus.HIT
 			this.extraCups--
+			this.statusMessage = `${this.currentTeam > 0 ? 'Red' : 'Blue'} Team: Remove ${this.extraCups} extra cup(s)`
 			if (this.extraCups <= 0) {
 				this.changeTeam()
 			}
@@ -47,10 +50,12 @@ class beerpong {
 		}
 
 		this.currentThrows++
+		this.statusMessage = `${this.currentTeam > 0 ? 'Red' : 'Blue'} Team: ${this.noOfBalls - this.currentThrows} throw(s) left`
 
 		if (this.currentThrows >= this.noOfBalls) {
 			this.changeTeam()
 		}
+
 	}
 
 	//A team has done all their throws.
@@ -62,12 +67,14 @@ class beerpong {
 		//If the team has any extra cups to remove.
 		if (this.extraCups > 0) {
 			this.extraRound = true
+			this.statusMessage = `${this.currentTeam > 0 ? 'Red' : 'Blue'} Team: Remove ${this.extraCups} extra cup(s)`
 			return
 		} else {
 			this.extraRound = false
 			this.currentTeam *= -1
 			this.currentThrows = 0
 			this.bounceActive = false
+			this.statusMessage = `${this.currentTeam > 0 ? 'Red' : 'Blue'} Team: ${this.noOfBalls} throw(s) left`
 		}
 
 	}

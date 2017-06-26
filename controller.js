@@ -1,5 +1,7 @@
 let game = new beerpong(10, 2)
 
+var statusMessage = document.querySelector('#statusMessage')
+
 let teamOneName = document.querySelector('.teamOne h2')
 let teamTwoName = document.querySelector('.teamTwo h2')
 
@@ -29,6 +31,8 @@ function updateUI() {
 	}
 
 	bounceToggler.checked = game.bounceActive
+
+	statusMessage.textContent = game.statusMessage
 }
 
 function updateCup(cup, status) {
@@ -60,3 +64,5 @@ missButton.addEventListener('click', () => {
 bounceToggler.addEventListener('change', () => {
 	game.bounceActive = bounceToggler.checked
 })
+
+document.addEventListener('DOMContentLoaded', updateUI)
