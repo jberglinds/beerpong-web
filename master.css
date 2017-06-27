@@ -121,4 +121,25 @@ body {
 /* Phantom element used in mid to center bounceToggler while missButton is pinned down */
 .phantom {
 	height: 48px;
+	width: 121px;
+}
+
+@media (orientation:portrait) and (max-width:736px) {
+	.table {
+		background: linear-gradient(to bottom, #4990E2 0%, #4990E2 50%, #FF3A3A 50%, #FF3A3A 100%);
+		box-sizing: border-box;
+		flex-direction: column;
+		align-items: center;
+		justify-content: space-between;
+		height: 100vh;
+	}
+
+	.half {
+		transform: rotate(90deg);
+	}
+
+	.mid {
+		flex-direction: row;
+		width: 100%;
+	}
 }
