@@ -8,58 +8,26 @@ body {
 	background-color: #121212;
 	color: white;
 	font-family: 'Open Sans', sans-serif;
-	margin: 0 5vw;
 }
 
-h1.gameName {
-	text-align: center;
-}
-
-.teams {
-	display: flex;
-	justify-content: space-between;
-	margin-bottom: 10px;
-}
-
-.teams ul {
-	list-style: none;
-	padding: 0;
-}
-
-.teams .teamTwo {
-	text-align: right;
-}
-
-.teams h2.active {
-	color: #BADA55;
-	font-weight: 700;
-}
-
-.cup {
-	border: 3px solid green;
+.status {
+	position: absolute;
 	background-color: white;
-	border-radius: 50%;
-	width: 60px;
-	height: 60px;
-	cursor: pointer;
-	margin: 5px 0;
-	box-shadow: inset 0px 0px 7px 0px rgba(0,0,0,0.75);
-
-}
-
-.pending {
-	opacity: 0.5 !important;
-}
-
-.teamOne .cup {
-	border-color: red;
-}
-
-.teamTwo .cup {
-	border-color: blue;
+	color: black;
+	text-align: center;
+	font-style: italic;
+	width: 80%;
+	height: 50px;
+	left: 10%;
+	border-bottom-left-radius: 20px;
+	border-bottom-right-radius: 20px;
 }
 
 .table {
+	background: linear-gradient(to right, #4990E2 0%, #4990E2 50%, #FF3A3A 50%, #FF3A3A 100%);
+	width: 100%;
+	padding: 5%;
+	box-sizing: border-box;
 	display: flex;
 	justify-content: space-between;
 	margin: auto;
@@ -81,4 +49,76 @@ h1.gameName {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
+}
+
+.cup {
+	border: 3px solid white;
+	background: rgba(215, 215, 215, 0.7);
+	border-radius: 50%;
+	width: 60px;
+	height: 60px;
+	cursor: pointer;
+	margin: 5px 0;
+	color: white;
+}
+
+.cup.pending {
+	background-color: rgba(104, 104, 104, 0.7);
+}
+
+.cup.hit {
+	visibility: hidden;
+}
+
+#missButton {
+	background-color: white;
+	border: none;
+	text-transform: uppercase;
+	font-weight: 500;
+	font-size: 25px;
+	border-radius: 999px;
+	padding: 10px 30px;
+	cursor: pointer;
+}
+
+.bounceToggler input[type=checkbox] {
+	visibility: hidden;
+}
+
+.bounceToggler {
+	width: 40px;
+	height: 40px;
+	position: relative;
+}
+
+.bounceToggler label {
+	cursor: pointer;
+	position: absolute;
+	width: 40px;
+	height: 40px;
+	top: 0;
+  	left: 0;
+	background: white;
+	border-radius: 10px;
+	color: black;
+}
+
+.bounceToggler label:after {
+	opacity: 0.2;
+	content: '×';
+	font-size: 35px;
+	background: transparent;
+}
+
+.bounceToggler label:hover::after {
+	opacity: 0.5;
+}
+
+.bounceToggler input[type=checkbox]:checked + label:after {
+	opacity: 1;
+}
+
+/* Phantom element used in mid to center bounceToggler while missButton is pinned down */
+.phantom {
+	height: 48px;
 }
