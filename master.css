@@ -74,6 +74,21 @@ body {
 	visibility: hidden;
 }
 
+.cup[draggable='true'] {
+	cursor: move;
+}
+
+.cup.hit[draggable='true'] {
+	visibility: visible;
+	background-color: transparent;
+	border-style: dashed;
+	cursor: auto;
+}
+
+.cup.dragOver {
+	background-color: rgba(255, 255, 0, 0.3) !important;
+}
+
 .mid {
 	display: flex;
 	align-items: center;
