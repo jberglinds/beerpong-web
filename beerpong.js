@@ -82,6 +82,7 @@ class beerpong {
 	//A missed throw.
 	miss() {
 		this.currentThrows++
+		this.statusMessage = `${this.currentTeam > 0 ? 'Red' : 'Blue'} Team: ${this.noOfBalls - this.currentThrows} throw(s) left`
 		if (this.currentThrows >= this.noOfBalls) {
 			this.changeTeam()
 		}
