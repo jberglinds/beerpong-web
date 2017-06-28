@@ -150,7 +150,6 @@ body {
 		flex-direction: column;
 	}
 
-	/* http://www.mademyday.de/css-height-equals-width-with-pure-css.html */
 	.squareRatio {
 		width: 15vh;
 		margin: 1vh 0;
@@ -158,5 +157,23 @@ body {
 
 	.mid {
 		flex-direction: column;
+	}
+}
+
+/* Bigger than iPhone+ in landscape */
+@media (min-width: 737px) {
+	.table {
+		height: auto;
+		box-sizing: border-box;
+		padding: 50px;
+		justify-content: space-between;
+	}
+
+	.mid {
+		justify-content: space-between;
+	}
+
+	.squareRatio {
+		width: 70px;
 	}
 }
