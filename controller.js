@@ -80,7 +80,8 @@ function dragStartHandler(e) {
 	e.dataTransfer.setData('text/html', this.innerHTML)
 }
 
-function dragEnterHandler() {
+function dragEnterHandler(e) {
+	e.preventDefault()
 	this.classList.add('dragOver')
 }
 

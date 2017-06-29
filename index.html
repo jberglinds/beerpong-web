@@ -3,7 +3,7 @@
 
 <head>
 	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimal-ui">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Beerpong tracker</title>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css">
 	<link rel="stylesheet" href="master.css">
@@ -67,6 +67,17 @@
 <script type="text/javascript" src="beerpong.js"></script>
 <script type="text/javascript" src="controller.js"></script>
 
+<!-- Polyfill for drag and drop on mobile -->
+<!-- TODO: Use some build system to include from vendor/ or something -->
+<link rel="stylesheet" href="node_modules/drag-drop-polyfill/drag-drop-polyfill.css">
+<script src="node_modules/drag-drop-polyfill/drag-drop-polyfill.min.js"></script>
+<script src="node_modules/drag-drop-polyfill/drag-drop-polyfill-scroll-behaviour.min.js"></script>
+<script>
+DragDropPolyfill.polyfill({
+	// to make use of the scroll behaviour
+	dragImageTranslateOverride: DragDropPolyfill.scrollBehaviourDragImageTranslateOverride
+});
+window.addEventListener( 'touchmove', function() {}) // Fix for scrolling while dragging
 </script>
 
 </html>

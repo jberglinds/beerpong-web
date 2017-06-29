@@ -8,6 +8,7 @@
 		"start": "browser-sync start --server --files '*.css, *.html, *.js'"
 	},
 	"dependencies": {
-		"browser-sync": "^2.18.12"
+		"browser-sync": "^2.18.12",
+		"drag-drop-polyfill": "2.0.0-rc.0"
 	}
 }
