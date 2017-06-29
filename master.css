@@ -5,80 +5,175 @@
 }*/
 
 body {
-	background-color: #121212;
 	color: white;
+	background-color: #121212;
 	font-family: 'Open Sans', sans-serif;
-	margin: 0 5vw;
 }
 
-h1.gameName {
+.status {
+	box-sizing: border-box;
+	height: 50px;
+	padding: 15px 0;
 	text-align: center;
 }
 
-.teams {
-	display: flex;
-	justify-content: space-between;
-	margin-bottom: 10px;
-}
-
-.teams ul {
-	list-style: none;
-	padding: 0;
-}
-
-.teams .teamTwo {
-	text-align: right;
-}
-
-.teams h2.active {
-	color: #BADA55;
-	font-weight: 700;
-}
-
-.cup {
-	border: 3px solid green;
-	background-color: white;
-	border-radius: 50%;
-	width: 60px;
-	height: 60px;
-	cursor: pointer;
-	margin: 5px 0;
-	box-shadow: inset 0px 0px 7px 0px rgba(0,0,0,0.75);
-
-}
-
-.pending {
-	opacity: 0.5 !important;
-}
-
-.teamOne .cup {
-	border-color: red;
-}
-
-.teamTwo .cup {
-	border-color: blue;
+.status p {
+	margin: 0;
 }
 
 .table {
 	display: flex;
-	justify-content: space-between;
-	margin: auto;
+	flex-direction: column;
+	justify-content: space-around;
+	width: 100vw;
+	height: calc(100vh - 50px); /* 50px for status bar height */
+	background: linear-gradient(to bottom, #4990E2 0%, #4990E2 50%, #FF3A3A 50%, #FF3A3A 100%);
 }
 
-.half {
-	display: flex;
-}
-
-.mid {
+.cups {
 	display: flex;
 	flex-direction: column;
-	align-items: center;
-	text-align: center;
-	justify-content: space-between;
 }
 
 .row {
 	display: flex;
-	flex-direction: column;
 	justify-content: center;
+}
+
+/* http://www.mademyday.de/css-height-equals-width-with-pure-css.html */
+.squareRatio {
+	position: relative;
+	width: 9vh;
+	margin: 0 1vh;
+}
+
+.squareRatio::before {
+	display: block;
+	padding-top: 100%;
+	content: '';
+}
+
+.cup {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	cursor: pointer;
+	color: white;
+	border: 3px solid white;
+	border-radius: 50%;
+	background: rgba(215, 215, 215, 0.7);
+}
+
+.cup.pending {
+	background-color: rgba(104, 104, 104, 0.7);
+}
+
+.cup.hit {
+	visibility: hidden;
+}
+
+.mid {
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+	text-align: center;
+}
+
+.missButton {
+	height: 40px;
+	padding: 0 30px;
+	cursor: pointer;
+	text-transform: uppercase;
+	border: none;
+	border-radius: 999px;
+	background-color: white;
+	font-size: 25px;
+	font-weight: 500;
+}
+
+.bounceToggler input[type=checkbox] {
+	visibility: hidden;
+}
+
+.bounceToggler {
+	position: relative;
+	width: 40px;
+	height: 40px;
+}
+
+.bounceToggler label {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 40px;
+	height: 40px;
+	cursor: pointer;
+	color: black;
+	border-radius: 10px;
+	background: white;
+}
+
+.bounceToggler label:after {
+	content: '×';
+	opacity: 0.2;
+	background: transparent;
+	font-size: 35px;
+}
+
+.bounceToggler label:hover::after {
+	opacity: 0.5;
+}
+
+.bounceToggler input[type=checkbox]:checked + label:after {
+	opacity: 1;
+}
+
+/* Hidden elements used for special cases of positioning, like in mid of table */
+.phantom {
+	visibility: hidden;
+}
+
+
+@media (orientation:landscape) {
+	.table {
+		flex-direction: row;
+		background: linear-gradient(to right, #4990E2 0%, #4990E2 50%, #FF3A3A 50%, #FF3A3A 100%);
+	}
+
+	.cups {
+		flex-direction: row;
+	}
+
+	.row {
+		flex-direction: column;
+	}
+
+	.squareRatio {
+		width: 15vh;
+		margin: 1vh 0;
+	}
+
+	.mid {
+		flex-direction: column;
+	}
+}
+
+/* Bigger than iPhone+ in landscape */
+@media (min-width: 737px) {
+	.table {
+		height: auto;
+		box-sizing: border-box;
+		padding: 50px;
+		justify-content: space-between;
+	}
+
+	.mid {
+		justify-content: space-between;
+	}
+
+	.squareRatio {
+		width: 70px;
+	}
 }
