@@ -163,7 +163,7 @@ body {
 }
 
 /* Bigger than iPhone+ in landscape */
-@media (min-width: 737px) {
+@media (min-width: 737px) and (orientation: landscape) {
 	.table {
 		height: auto;
 		box-sizing: border-box;
