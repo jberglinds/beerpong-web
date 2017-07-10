@@ -49,9 +49,9 @@ function start() {
 function addRow(cups, team, startIndex) {
 	let row = document.createElement('div')
 	row.classList.add('row')
-	let nextIndex = addCups(cups, row, startIndex, team.dataset.teamid)
+	addCups(cups, row, startIndex, team.dataset.teamid)
 	team.appendChild(row)
-	return nextIndex
+	return startIndex - team.dataset.teamid*cups
 }
 
 function addCups(cups, row, index, teamID) {
@@ -65,7 +65,6 @@ function addCups(cups, row, index, teamID) {
 		div.appendChild(cup)
 		row.appendChild(div)
 	}
-	return index
 }
 
 function updateUI() {
