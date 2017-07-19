@@ -14,17 +14,32 @@ class Beerpong {
 		this.noOfCups = noOfCups
 		this.noOfBalls = noOfBalls
 
-		this.team1 = new Team('Emil Team', noOfCups, [])
-		this.team2 = new Team('Red Team', noOfCups, [])
+		this.team1 = new Team('Dickteam', noOfCups, [
+			new Player(1, 'Jonathan'),
+			new Player(2, 'Emil')
+		])
+		this.team2 = new Team('Snoken', noOfCups, [
+			new Player(3, 'Jonas'),
+			new Player(4, 'Matteus')
+		])
 
 		this.bounceActive = false
 		this.currentTeam = 1
 		this.throwCount = 0
+		this.activePlayer = null
 
 		this.extraCups = 0
 		this.extraRound = false
 
 		this.setStatusMessage(StatusMessage.THROWS_LEFT)
+	}
+
+	getPlayersInTeam(teamID) {
+		return this.getTeam(teamID).getPlayerObjects()
+	}
+
+	setActivePlayer(playerID) {
+		this.activePlayer = this.getCurrentTeam().getPlayer(playerID)
 	}
 
 	setStatusMessage(type) {
@@ -79,8 +94,11 @@ class Beerpong {
 			this.getOtherTeam().hitCup(cupIndex)
 		}
 
+		this.activePlayer.registerHit(this.bounceActive)
+
 		this.throwCount++
 		this.setStatusMessage(StatusMessage.THROWS_LEFT)
+		this.bounceActive = false
 
 		if (this.throwCount >= this.noOfBalls) {
 			this.changeTeam()
@@ -110,6 +128,7 @@ class Beerpong {
 	//A missed throw.
 	miss() {
 		this.throwCount++
+		this.activePlayer.registerMiss(this.bounceActive)
 		this.setStatusMessage(StatusMessage.THROWS_LEFT)
 		if (this.throwCount >= this.noOfBalls) {
 			this.changeTeam()
@@ -123,6 +142,14 @@ class Team {
 		this.teamName = teamName
 		this.cups = new Array(noOfCups).fill(CupStatus.UNTOUCHED)
 		this.players = players
+	}
+
+	getPlayer(id) {
+		return this.players.find(player => player.id == id)
+	}
+
+	getPlayerObjects() {
+		return this.players.map(player => {player.name, player.id})
 	}
 
 	getTeamName() {
@@ -154,7 +181,30 @@ class Team {
 }
 
 class Player {
-	constructor(name) {
+	constructor(id, name) {
+		this.id = id
 		this.name = name
+
+		// Stats
+		this.noOfThrows = 0
+		this.noOfHits = 0
+		this.noOfBounceThrows = 0
+		this.noOfBounceHits = 0
+	}
+
+	registerHit(bounce = false) {
+		this.noOfThrows++
+		this.noOfHits++
+		if (bounce) {
+			this.noOfBounceThrows++
+			this.noOfBounceHits++
+		}
+	}
+
+	registerMiss(bounce = false) {
+		this.noOfThrows++
+		if (bounce) {
+			this.noOfBounceThrows++
+		}
 	}
 }
