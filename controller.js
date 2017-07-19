@@ -42,7 +42,7 @@ function start() {
 		updateUI()
 	}))
 
-	game = new beerpong(noOfCups, noOfBalls)
+	game = new Beerpong(noOfCups, noOfBalls)
 	updateUI()
 }
 
@@ -85,10 +85,10 @@ function updateUI() {
 
 function updateCup(cup, status) {
 	switch (status) {
-	case cupStatus.HIT:
+	case CupStatus.HIT:
 		cup.style.visibility = 'hidden'
 		break
-	case cupStatus.PENDING:
+	case CupStatus.PENDING:
 		cup.classList.add('pending')
 		break
 	}

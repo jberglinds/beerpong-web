@@ -1,37 +1,48 @@
-const cupStatus = {
+const CupStatus = {
 	UNTOUCHED: 0,
 	HIT: 1,
 	PENDING: 2,
 }
 
-class beerpong {
+const StatusMessage = {
+	THROWS_LEFT: 0,
+	REMOVE_EXTRA: 1,
+}
 
+class Beerpong {
 	constructor(noOfCups, noOfBalls) {
 		this.noOfCups = noOfCups
 		this.noOfBalls = noOfBalls
 
-		this.team1Cups = new Array(noOfCups).fill(cupStatus.UNTOUCHED)
-		this.team2Cups = new Array(noOfCups).fill(cupStatus.UNTOUCHED)
-
-		this.team1 = new team('Team 1', this.team1Cups, [])
-		this.team2 = new team('Team 2', this.team2Cups, [])
+		this.team1 = new Team('Emil Team', noOfCups, [])
+		this.team2 = new Team('Red Team', noOfCups, [])
 
 		this.bounceActive = false
 		this.currentTeam = 1
-		this.currentThrows = 0
+		this.throwCount = 0
 
 		this.extraCups = 0
 		this.extraRound = false
 
-		this.statusMessage = `${this.currentTeam > 0 ? 'Blue' : 'Red'} Team: ${this.noOfBalls} throw(s) left`
+		this.setStatusMessage(StatusMessage.THROWS_LEFT)
 	}
 
+	setStatusMessage(type) {
+		switch (type) {
+		case StatusMessage.THROWS_LEFT:
+			this.statusMessage = `${this.getCurrentTeam().getTeamName()}: ${this.noOfBalls - this.throwCount} throw(s) left`
+			break
+		case StatusMessage.REMOVE_EXTRA:
+			this.statusMessage = `${this.getCurrentTeam().getTeamName()}: Remove ${this.extraCups} extra cup(s)`
+			break
+		}
+	}
 	// Currently playing team
 	getCurrentTeam() {
 		return this.getTeam(this.currentTeam)
 	}
 
-	// Not currently playing team
+	// Team that is not currently playing
 	getOtherTeam() {
 		return this.getTeam(this.currentTeam * -1)
 	}
@@ -53,7 +64,7 @@ class beerpong {
 		if (this.extraRound) {
 			this.getOtherTeam().removeCup(cupIndex)
 			this.extraCups--
-			this.statusMessage = `${this.currentTeam > 0 ? 'Blue' : 'Red'} Team: Remove ${this.extraCups} extra cup(s)`
+			this.setStatusMessage(StatusMessage.REMOVE_EXTRA)
 			if (this.extraCups <= 0) {
 				this.changeTeam()
 			}
@@ -62,16 +73,16 @@ class beerpong {
 
 		this.extraCups += this.bounceActive ? 1 : 0
 
-		if (this.getOtherTeam().getCupStatus(cupIndex) === cupStatus.PENDING) {
+		if (this.getOtherTeam().getCupStatus(cupIndex) === CupStatus.PENDING) {
 			this.extraCups += 2
 		} else {
 			this.getOtherTeam().hitCup(cupIndex)
 		}
 
-		this.currentThrows++
-		this.statusMessage = `${this.currentTeam > 0 ? 'Blue' : 'Red'} Team: ${this.noOfBalls - this.currentThrows} throw(s) left`
+		this.throwCount++
+		this.setStatusMessage(StatusMessage.THROWS_LEFT)
 
-		if (this.currentThrows >= this.noOfBalls) {
+		if (this.throwCount >= this.noOfBalls) {
 			this.changeTeam()
 		}
 
@@ -84,34 +95,38 @@ class beerpong {
 		//If the team has any extra cups to remove.
 		if (this.extraCups > 0) {
 			this.extraRound = true
-			this.statusMessage = `${this.currentTeam > 0 ? 'Blue' : 'Red'} Team: Remove ${this.extraCups} extra cup(s)`
+			this.setStatusMessage(StatusMessage.REMOVE_EXTRA)
 			return
 		} else {
 			this.extraRound = false
 			this.currentTeam *= -1
-			this.currentThrows = 0
+			this.throwCount = 0
 			this.bounceActive = false
-			this.statusMessage = `${this.currentTeam > 0 ? 'Blue' : 'Red'} Team: ${this.noOfBalls} throw(s) left`
+			this.setStatusMessage(StatusMessage.THROWS_LEFT)
 		}
 
 	}
 
 	//A missed throw.
 	miss() {
-		this.currentThrows++
-		this.statusMessage = `${this.currentTeam > 0 ? 'Red' : 'Blue'} Team: ${this.noOfBalls - this.currentThrows} throw(s) left`
-		if (this.currentThrows >= this.noOfBalls) {
+		this.throwCount++
+		this.setStatusMessage(StatusMessage.THROWS_LEFT)
+		if (this.throwCount >= this.noOfBalls) {
 			this.changeTeam()
 		}
 	}
 
 }
 
-class team {
-	constructor(teamName, cups, players) {
+class Team {
+	constructor(teamName, noOfCups, players) {
 		this.teamName = teamName
-		this.cups = cups
+		this.cups = new Array(noOfCups).fill(CupStatus.UNTOUCHED)
 		this.players = players
+	}
+
+	getTeamName() {
+		return this.teamName
 	}
 
 	getCups() {
@@ -120,7 +135,7 @@ class team {
 
 	// Set all pending cups to hit
 	removePendingCups() {
-		this.cups = this.cups.map(item => item === cupStatus.PENDING ? cupStatus.HIT : item)
+		this.cups = this.cups.map(item => item === CupStatus.PENDING ? CupStatus.HIT : item)
 	}
 
 	getCupStatus(index) {
@@ -128,17 +143,17 @@ class team {
 	}
 
 	hitCup(index) {
-		this.cups[index] = cupStatus.PENDING
+		this.cups[index] = CupStatus.PENDING
 	}
 
 	removeCup(index) {
-		this.cups[index] = cupStatus.HIT
+		this.cups[index] = CupStatus.HIT
 	}
 
 
 }
 
-class player {
+class Player {
 	constructor(name) {
 		this.name = name
 	}
