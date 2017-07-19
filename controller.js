@@ -78,14 +78,6 @@ function updateUI() {
 		updateCup(cup, status)
 	})
 
-	// if(game.currentTeam > 0) {
-	// 	teamOneName.classList.add('active')
-	// 	teamTwoName.classList.remove('active')
-	// } else {
-	// 	teamOneName.classList.remove('active')
-	// 	teamTwoName.classList.add('active')
-	// }
-
 	bounceToggler.checked = game.bounceActive
 
 	statusMessage.textContent = game.statusMessage
