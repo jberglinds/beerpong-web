@@ -69,12 +69,12 @@ function addCups(cups, row, index, teamID) {
 
 function updateUI() {
 	teamOneCups.forEach(cup => {
-		let status = game.team1Cups[cup.dataset.index]
+		let status = game.getCupStatus(1, cup.dataset.index)
 		updateCup(cup, status)
 	})
 
 	teamTwoCups.forEach(cup => {
-		let status = game.team2Cups[cup.dataset.index]
+		let status = game.getCupStatus(-1, cup.dataset.index)
 		updateCup(cup, status)
 	})
 
