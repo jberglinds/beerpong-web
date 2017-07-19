@@ -1,6 +1,3 @@
-let noOfCups = 10;
-let noOfBalls = 2;
-
 let game
 
 var statusMessage = document.querySelector('#statusMessage')
@@ -18,10 +15,13 @@ var bounceToggler = document.querySelector('#bounceToggler')
 var missButton = document.querySelector('#missButton')
 
 function start() {
-	let base
-	if (noOfCups === 10) base = 4
-	if (noOfCups === 6) base = 3
-	if (noOfCups === 3) base = 2
+	let noOfCups = parseInt(prompt('Enter number of cups (10, 6 or 3)'))
+	let noOfBalls = parseInt(prompt('Enter number of balls'))
+
+	let base = noOfCups > 10 ? 5 :
+		noOfCups > 6 ? 4 :
+		noOfCups > 3 ? 3 : 2
+
 	let indexOne = noOfCups-1
 	let indexTwo = 0
 	for (let i = 0; i < base; i++) {
