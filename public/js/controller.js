@@ -33,6 +33,27 @@ function start() {
 	teamTwoCups = teamTwo.querySelectorAll('.cup')
 
 	teamOneCups.forEach(cup => cup.addEventListener('click', () => {
+
+		// Get the modal
+		let modal = document.querySelector('#myModal')
+		let playersDiv = modal.querySelector('#players')
+		console.log(modal);
+		modal.style.display = 'block'
+
+		for (let player of game.getPlayersInTeam(-1)) {
+			let playerButton = document.createElement('div')
+			playerButton.dataset.id = player.id
+			playerButton.innerHTML = player.name
+			playerButton.classList.add('playerButton')
+			playerButton.addEventListener('click', () => {
+				game.setActivePlayer(playerButton.dataset.id)
+				modal.style.display = 'none'
+			})
+			playersDiv.appendChild(playerButton)
+		}
+
+
+
 		game.hitCup(cup.dataset.index, -1)
 		updateUI()
 	}))
