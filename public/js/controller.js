@@ -14,6 +14,27 @@ let teamTwoName = teamTwo.querySelector('h2')
 var bounceToggler = document.querySelector('#bounceToggler')
 var missButton = document.querySelector('#missButton')
 
+const handleThrow = (teamID, callback) => {
+	let modal = document.querySelector('#myModal')
+	let playersDiv = modal.querySelector('#players')
+	playersDiv.innerHTML = ''
+	modal.style.display = 'block'
+
+	for (let player of game.getPlayersInTeam(teamID)) {
+		let playerButton = document.createElement('div')
+		playerButton.dataset.id = player.id
+		playerButton.innerHTML = player.name
+		playerButton.classList.add('playerButton')
+		playerButton.addEventListener('click', () => {
+			game.setActivePlayer(playerButton.dataset.id)
+			modal.style.display = 'none'
+			callback()
+			updateUI()
+		})
+		playersDiv.appendChild(playerButton)
+	}
+}
+
 function start() {
 	let noOfCups = parseInt(prompt('Enter number of cups (10, 6 or 3)'))
 	let noOfBalls = parseInt(prompt('Enter number of balls'))
@@ -29,41 +50,22 @@ function start() {
 		indexTwo = addRow(i+1, teamTwo, indexTwo)
 	}
 
+
 	teamOneCups = teamOne.querySelectorAll('.cup')
 	teamTwoCups = teamTwo.querySelectorAll('.cup')
 
 	teamOneCups.forEach(cup => cup.addEventListener('click', () => {
-
-		// Get the modal
-		let modal = document.querySelector('#myModal')
-		let playersDiv = modal.querySelector('#players')
-		console.log(modal);
-		modal.style.display = 'block'
-
-		for (let player of game.getPlayersInTeam(-1)) {
-			let playerButton = document.createElement('div')
-			playerButton.dataset.id = player.id
-			playerButton.innerHTML = player.name
-			playerButton.classList.add('playerButton')
-			playerButton.addEventListener('click', () => {
-				game.setActivePlayer(playerButton.dataset.id)
-				modal.style.display = 'none'
-			})
-			playersDiv.appendChild(playerButton)
-		}
-
-
-
-		game.hitCup(cup.dataset.index, -1)
-		updateUI()
+		let opponentsTeamID = -1
+		handleThrow(opponentsTeamID, () => game.hitCup(cup.dataset.index, opponentsTeamID))
 	}))
 
 	teamTwoCups.forEach(cup => cup.addEventListener('click', () => {
-		game.hitCup(cup.dataset.index, 1)
-		updateUI()
+		let opponentsTeamID = 1
+		handleThrow(opponentsTeamID, () => game.hitCup(cup.dataset.index, opponentsTeamID))
 	}))
 
 	game = new Beerpong(noOfCups, noOfBalls)
+	game.setActivePlayer(1)
 	updateUI()
 }
 
@@ -116,8 +118,7 @@ function updateCup(cup, status) {
 }
 
 missButton.addEventListener('click', () => {
-	game.miss()
-	updateUI()
+	handleThrow(game.currentTeam, () => game.miss())
 })
 
 bounceToggler.addEventListener('change', () => {

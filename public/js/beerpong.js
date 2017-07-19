@@ -168,7 +168,12 @@ class Team {
 	 * @return {Array<Object>}
 	 */
 	getPlayerObjects() {
-		return this.players.map(player => {player.name, player.id})
+		return this.players.map(player => {
+			return {
+				name: player.name,
+				id: player.id
+			}
+		})
 	}
 
 	/**

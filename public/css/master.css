@@ -192,7 +192,16 @@ body {
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
 
+#players {
+	display: flex;
+	justify-content: center;
+}
+
 .playerButton {
+	text-align: center;
+	cursor: pointer;
+	margin: 10px;
+	width: 10%;
 	background-color: red;
 }
 
