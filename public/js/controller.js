@@ -15,7 +15,12 @@ var bounceToggler = document.querySelector('#bounceToggler')
 var missButton = document.querySelector('#missButton')
 
 const handleThrow = (teamID, callback) => {
-	let modal = document.querySelector('#myModal')
+
+	const color = (id) => {
+		return id > 0 ? '#4990E2' : '#FF3A3A'
+	}
+
+	let modal = document.querySelector('#choosePlayerModal')
 	let playersDiv = modal.querySelector('#players')
 	playersDiv.innerHTML = ''
 	modal.style.display = 'block'
@@ -25,6 +30,7 @@ const handleThrow = (teamID, callback) => {
 		playerButton.dataset.id = player.id
 		playerButton.innerHTML = player.name
 		playerButton.classList.add('playerButton')
+		playerButton.style.backgroundColor =  color(teamID)
 		playerButton.addEventListener('click', () => {
 			game.setActivePlayer(playerButton.dataset.id)
 			modal.style.display = 'none'
@@ -56,12 +62,12 @@ function start() {
 
 	teamOneCups.forEach(cup => cup.addEventListener('click', () => {
 		let opponentsTeamID = -1
-		handleThrow(opponentsTeamID, () => game.hitCup(cup.dataset.index, opponentsTeamID))
+		game.getCurrentTeamID() === opponentsTeamID ? handleThrow(opponentsTeamID, () => game.hitCup(cup.dataset.index, opponentsTeamID)) : null
 	}))
 
 	teamTwoCups.forEach(cup => cup.addEventListener('click', () => {
 		let opponentsTeamID = 1
-		handleThrow(opponentsTeamID, () => game.hitCup(cup.dataset.index, opponentsTeamID))
+		game.getCurrentTeamID() === opponentsTeamID ? handleThrow(opponentsTeamID, () => game.hitCup(cup.dataset.index, opponentsTeamID)) : null
 	}))
 
 	game = new Beerpong(noOfCups, noOfBalls)
@@ -118,7 +124,7 @@ function updateCup(cup, status) {
 }
 
 missButton.addEventListener('click', () => {
-	handleThrow(game.currentTeam, () => game.miss())
+	handleThrow(game.getCurrentTeamID(), () => game.miss())
 })
 
 bounceToggler.addEventListener('change', () => {

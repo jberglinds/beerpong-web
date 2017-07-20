@@ -52,6 +52,11 @@ class Beerpong {
 			break
 		}
 	}
+
+	getCurrentTeamID() {
+		return this.currentTeam
+	}
+
 	// Currently playing team
 	getCurrentTeam() {
 		return this.getTeam(this.currentTeam)
