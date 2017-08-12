@@ -1,8 +1,8 @@
-// import optimist from 'redux-optimist'
-// import { combineReducers } from 'redux'
-//
-// import gameReducer from './gamereducer'
-//
-// export default optimist(combineReducers({
-// 	gameReducer,
-// }))
+import { combineReducers } from 'redux'
+import game from './game'
+
+const beerpongApp = combineReducers({
+	game,
+})
+
+export default beerpongApp
