@@ -4,7 +4,7 @@ import classNames from 'classnames'
 
 import CupStatus from '../game/CupStatus'
 
-const Cup = (index, status, onClick) => {
+const Cup = ({ index, status, onClick }) => {
 	const classes = classNames(
 		'cup',
 		{
