@@ -8,7 +8,7 @@ const Controls = ({ className, bounceActive, onBounceToggle, onMissClick }) => (
 			<input
 				type="checkbox"
 				id="bounceToggler"
-				defaultChecked={bounceActive}
+				checked={bounceActive}
 				ref={(checkbox) => { this.checkbox = checkbox }}
 				onChange={() => onBounceToggle(this.checkbox.checked)}
 			/>

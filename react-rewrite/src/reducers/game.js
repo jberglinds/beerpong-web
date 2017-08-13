@@ -1,7 +1,7 @@
 import CupStatus from '../game/CupStatus'
 
 const initialState = {
-	noOfBalls: 2,
+	noOfBalls: 3,
 	team1Cups: Array(10).fill(CupStatus.UNTOUCHED),
 	team2Cups: Array(10).fill(CupStatus.UNTOUCHED),
 	bounceActive: false,
@@ -14,9 +14,8 @@ const initialState = {
 
 // TODO: Ugly af, make better
 const cupHit = (state, teamId, cupIndex) => {
-	if (teamId !== state.currentTeam) {
-		return {}
-	}
+	if (teamId !== state.currentTeam) return {}
+
 	const cups = teamId > 0 ? state.team1Cups : state.team2Cups
 	const cup = cups[cupIndex]
 	let newCup = CupStatus.HIT
@@ -34,6 +33,30 @@ const cupHit = (state, teamId, cupIndex) => {
 		team1Cups: teamId > 0 ? newCups : state.team1Cups.slice(),
 		team2Cups: teamId < 0 ? newCups : state.team2Cups.slice(),
 		throwCount: state.throwCount + 1,
+		bounceActive: false,
+	}
+}
+
+const innerReducer = (state = initialState, action) => {
+	switch (action.type) {
+	case 'CUP_HIT':
+		return {
+			...state,
+			...cupHit(state, action.teamId, action.cupIndex),
+		}
+	case 'BOUNCE_TOGGLE':
+		return {
+			...state,
+			bounceActive: action.bounceActive,
+		}
+	case 'CUP_MISS':
+		return {
+			...state,
+			throwCount: state.throwCount + 1,
+			bounceActive: false,
+		}
+	default:
+		return state
 	}
 }
 
@@ -54,28 +77,6 @@ const maybeEndRound = (state) => {
 		}
 	}
 	return {}
-}
-
-const innerReducer = (state = initialState, action) => {
-	switch (action.type) {
-	case 'CUP_HIT':
-		return {
-			...state,
-			...cupHit(state, action.teamId, action.cupIndex),
-		}
-	case 'BOUNCE_TOGGLE':
-		return {
-			...state,
-			bounceActive: action.bounceActive,
-		}
-	case 'CUP_MISS':
-		return {
-			...state,
-			throwCount: state.throwCount + 1,
-		}
-	default:
-		return state
-	}
 }
 
 const game = (state, action) => {
