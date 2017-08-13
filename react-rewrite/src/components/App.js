@@ -1,11 +1,11 @@
 import React from 'react'
-import Game from '../containers/Game'
+import GameContainer from '../containers/GameContainer'
 
 import '../App.css'
 
 const App = () => (
 	<div>
-		<Game />
+		<GameContainer />
 	</div>
 )
 
