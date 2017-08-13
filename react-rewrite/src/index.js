@@ -8,7 +8,12 @@ import App from './components/App'
 
 import './index.css'
 
-const store = createStore(beerpongApp)
+/* eslint-disable no-underscore-dangle */
+const store = createStore(
+	beerpongApp,
+	window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
+)
+/* eslint-enable */
 
 render(
 	<Provider store={store}>

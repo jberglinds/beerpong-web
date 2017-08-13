@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import Cup from './Cup'
 
-const TeamRack = ({ cups, onCupClick }) => {
+const TeamRack = ({ className, cups, onCupClick }) => {
 	function renderCup(i) {
 		return (
 			<div className="squareRatio">
@@ -16,7 +16,7 @@ const TeamRack = ({ cups, onCupClick }) => {
 		)
 	}
 	return (
-		<div className="cups">
+		<div className={`cups ${className}`}>
 			<div className="row">
 				{renderCup(0)}
 				{renderCup(1)}
@@ -39,8 +39,12 @@ const TeamRack = ({ cups, onCupClick }) => {
 	)
 }
 TeamRack.propTypes = {
+	className: PropTypes.string,
 	cups: PropTypes.arrayOf(Number).isRequired,
 	onCupClick: PropTypes.func.isRequired,
+}
+TeamRack.defaultProps = {
+	className: '',
 }
 
 export default TeamRack
