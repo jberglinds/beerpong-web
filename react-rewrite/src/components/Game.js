@@ -14,6 +14,7 @@ const Game = ({ team1Cups, team2Cups, onCupClick, bounceActive, onBounceToggle,
 					className="teamOne"
 					cups={team1Cups}
 					onCupClick={(index) => { onCupClick(1, index) }}
+					facingRight
 				/>
 				<Controls
 					className="mid"
