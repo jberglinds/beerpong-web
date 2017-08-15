@@ -20,13 +20,25 @@ const cupHit = (state, teamId, cupIndex) => {
 	if (teamId !== state.currentTeam) return {}
 
 	const cups = teamId > 0 ? state.team1Cups : state.team2Cups
-	const cup = cups[cupIndex]
+	const hitCup = cups[cupIndex]
 	let newCup = CupStatus.HIT
-	if (cup === CupStatus.UNTOUCHED) {
-		newCup = CupStatus.PENDING
-	} else if (cup === CupStatus.PENDING) {
+	let extraCups = state.extraCups
+
+	if (state.throwCount >= state.noOfBalls && extraCups >= 0) {
+		// Removing extra
 		newCup = CupStatus.HIT
+		extraCups -= 1
+	} else {
+		// Regular throw
+		if (hitCup === CupStatus.UNTOUCHED) {
+			newCup = CupStatus.PENDING
+		} else if (hitCup === CupStatus.PENDING) {
+			newCup = CupStatus.PENDING
+			extraCups += 2
+		}
+		if (state.bounceActive) extraCups += 1
 	}
+
 	const newCups = [
 		...cups.slice(0, cupIndex),
 		newCup,
@@ -37,6 +49,7 @@ const cupHit = (state, teamId, cupIndex) => {
 		team2Cups: teamId < 0 ? newCups : state.team2Cups.slice(),
 		throwCount: state.throwCount + 1,
 		bounceActive: false,
+		extraCups,
 	}
 }
 
@@ -63,21 +76,28 @@ const actionReducer = (state = initialState, action) => {
 	}
 }
 
+const pendingCupsToHit = cups => (
+	cups.map(cup => (cup === CupStatus.PENDING ? CupStatus.HIT : cup))
+)
+
 // Sets all pending cups to hit and resets throw count if round is ended
 const maybeEndRoundReducer = (state) => {
-	if (state.throwCount >= state.noOfBalls) {
-		const newTeam1Cups = state.team1Cups.map(cup =>
-			(cup === CupStatus.PENDING ? CupStatus.HIT : cup),
-		)
-		const newTeam2Cups = state.team2Cups.map(cup =>
-			(cup === CupStatus.PENDING ? CupStatus.HIT : cup),
-		)
+	const throwsLeft = state.noOfBalls - state.throwCount
+	if (throwsLeft <= 0) {
+		let throwCount = state.throwCount
+		let currentTeam = state.currentTeam
+
+		if (state.extraCups <= 0) {
+			// If no extra cups to remove, change team
+			throwCount = 0
+			currentTeam *= -1
+		}
 		return {
 			...state,
-			throwCount: 0,
-			team1Cups: newTeam1Cups,
-			team2Cups: newTeam2Cups,
-			currentTeam: state.currentTeam * -1,
+			throwCount,
+			team1Cups: pendingCupsToHit(state.team1Cups),
+			team2Cups: pendingCupsToHit(state.team2Cups),
+			currentTeam,
 		}
 	}
 	return state
@@ -85,10 +105,19 @@ const maybeEndRoundReducer = (state) => {
 
 const updateStatusReducer = (state) => {
 	const throwsLeft = state.noOfBalls - state.throwCount
+	const extraCups = state.extraCups
 	const currentTeamName = state.currentTeam > 0 ? state.team1Name : state.team2Name
+
+	let statusMessage = state.statusMessage
+	if (throwsLeft <= 0 && extraCups >= 0) {
+		statusMessage = `${currentTeamName}: Remove ${extraCups} extra cup(s)`
+	} else {
+		statusMessage = `${currentTeamName}: ${throwsLeft} throw(s) left`
+	}
+
 	return 	{
 		...state,
-		statusMessage: `${currentTeamName}: ${throwsLeft} throw(s) left`,
+		statusMessage,
 	}
 }
 
