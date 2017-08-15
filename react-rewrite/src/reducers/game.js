@@ -12,7 +12,7 @@ const initialState = {
 	activePlayer: null,
 	extraCups: 0,
 	extraRound: false,
-	statusMessage: 'Blue Team: 2 throws left',
+	statusMessage: '',
 }
 
 // TODO: Ugly af, make better
