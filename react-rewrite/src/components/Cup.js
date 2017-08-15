@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 
-import CupStatus from '../game/CupStatus'
+import CupStatus from '../common/CupStatus'
 
 const Cup = ({ index, status, onClick }) => {
 	const classes = classNames(

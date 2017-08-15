@@ -1,7 +1,9 @@
-import CupStatus from '../game/CupStatus'
+import CupStatus from '../common/CupStatus'
 
 const initialState = {
 	noOfBalls: 3,
+	team1Name: 'Blue Team',
+	team2Name: 'Red Team',
 	team1Cups: Array(10).fill(CupStatus.UNTOUCHED),
 	team2Cups: Array(10).fill(CupStatus.UNTOUCHED),
 	bounceActive: false,

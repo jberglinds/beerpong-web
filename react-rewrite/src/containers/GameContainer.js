@@ -8,6 +8,7 @@ const mapStateToProps = state => ({
 	team2Cups: state.game.team2Cups,
 	bounceActive: state.game.bounceActive,
 	statusMessage: state.game.statusMessage,
+	currentTeam: state.game.currentTeam,
 })
 
 const mapDispatchToProps = dispatch => ({

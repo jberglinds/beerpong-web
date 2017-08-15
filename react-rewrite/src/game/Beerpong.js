@@ -1,6 +1,6 @@
 import Team from './Team'
 import Player from './Player'
-import CupStatus from './CupStatus'
+import CupStatus from '../common/CupStatus'
 
 const StatusMessage = {
 	THROWS_LEFT: 0,

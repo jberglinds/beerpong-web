@@ -1,4 +1,4 @@
-import CupStatus from './CupStatus'
+import CupStatus from '../common/CupStatus'
 
 export default class Team {
 	/**

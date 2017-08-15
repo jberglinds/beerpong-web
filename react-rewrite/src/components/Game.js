@@ -6,14 +6,16 @@ import TeamRack from './TeamRack'
 import Controls from './Controls'
 
 const Game = ({ team1Cups, team2Cups, onCupClick, bounceActive, onBounceToggle,
-	onCupMiss, statusMessage }) => (
+	onCupMiss, statusMessage, currentTeam }) => (
 		<div>
 			<Status message={statusMessage} />
 			<div className="table">
 				<TeamRack
 					className="teamOne"
 					cups={team1Cups}
-					onCupClick={(index) => { onCupClick(1, index) }}
+					onCupClick={(index) => {
+						if (currentTeam > 0) onCupClick(1, index)
+					}}
 					facingRight
 				/>
 				<Controls
@@ -25,7 +27,9 @@ const Game = ({ team1Cups, team2Cups, onCupClick, bounceActive, onBounceToggle,
 				<TeamRack
 					className="teamTwo"
 					cups={team2Cups}
-					onCupClick={(index) => { onCupClick(-1, index) }}
+					onCupClick={(index) => {
+						if (currentTeam < 0) onCupClick(-1, index)
+					}}
 				/>
 			</div>
 		</div>
@@ -38,6 +42,7 @@ Game.propTypes = {
 	onBounceToggle: PropTypes.func.isRequired,
 	onCupMiss: PropTypes.func.isRequired,
 	statusMessage: PropTypes.string,
+	currentTeam: PropTypes.number.isRequired,
 }
 Game.defaultProps = {
 	statusMessage: '',
